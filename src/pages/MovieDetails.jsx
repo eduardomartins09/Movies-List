@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   BsGraphUp,
@@ -8,9 +8,8 @@ import {
   BsCalendar2DateFill,
 } from "react-icons/bs";
 
-const API_KEY = `7bcc916b835fb16aa7c22a673eda7f1f`;
-
 import "./MovieDetails.css";
+import { API_KEY, urlGetMovies } from "../utils/api";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -23,9 +22,9 @@ const MovieDetails = () => {
   };
 
   function formatCurrency(number) {
-    return number.toLocaleString("en-US", {
+    return number.toLocaleString("pt-BR", {
       style: "currency",
-      currency: "USD",
+      currency: "BRL",
     });
   }
 
@@ -34,7 +33,7 @@ const MovieDetails = () => {
   };
 
   useEffect(() => {
-    const movieUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`;
+    const movieUrl = `${urlGetMovies}/${id}?api_key=${API_KEY}&language=pt-BR`;
     getMovies(movieUrl);
   }, []);
 

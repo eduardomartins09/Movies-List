@@ -1,9 +1,9 @@
-import React from 'react'
-
 import { Link } from 'react-router-dom'
 
-
 const MovieCard = ({ movieList, loading, error, showLink = true }) => {
+
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>{error}</div>;  
     
   return (
     <>

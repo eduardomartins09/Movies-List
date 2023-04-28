@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import './MoviesGrid.css'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
 
- 
-const API_KEY = `7bcc916b835fb16aa7c22a673eda7f1f`;
-
-import './MoviesGrid.css'
+import { API_KEY, urlGetMoviesSearch } from '../utils/api';
 
 const Search = () => {
   const [searchParams] = useSearchParams()
-
   const [movies, setMovies] = useState([])
   const query = searchParams.get("q")
 
@@ -20,11 +17,9 @@ const Search = () => {
   } 
 
   useEffect(() => {
-    const searchWithQueryURL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+    const searchWithQueryURL = `${urlGetMoviesSearch}?api_key=${API_KEY}&query=${query}`
     getSearchedMovies(searchWithQueryURL)
   }, [query])
-
-  const showLink = true
 
   return (
     <div className='container'>   

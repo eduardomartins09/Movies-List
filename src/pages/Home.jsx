@@ -1,31 +1,40 @@
+import './MoviesGrid.css'
 import { useEffect, useState } from "react";
-
-import axios from 'axios'
-import moviesInstance from '../helper/axios-instance'
-import useAxios from '../hook/use-axios'
 
 import MovieCard from '../components/MovieCard'
 
-import './MoviesGrid.css'
-
-const API_KEY = `7bcc916b835fb16aa7c22a673eda7f1f`;
+import { API_KEY, urlGetMovies } from "../utils/api";
 
 const Home = () => {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+ 
+  const fetchData = async () => {
+    try {
+        const res = await fetch(`${urlGetMovies}/popular?api_key=${API_KEY}&language=pt-BR&page=1`)
+        const resJ = await res.json()
+        setData(resJ.results)
+    } catch (err) {
+        setError(err.message)
+    } finally {
+        setLoading(false)
+    }
+  } 
 
-  const [movieList, loading, error] = useAxios({
-    axiosInstance: moviesInstance,
-    method: "GET",
-    url: `/popular?api_key=${API_KEY}&language=en-US&page=${pageNumber}`,
-  });
-  
-  if (loading) return <div>loading</div>;
-  if (error) return <div>{error}</div>;
+  useEffect(() => {
+    fetchData()
+  }, []) 
 
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>{error}</div>; 
+ 
   return (
     <div className="container">
         <div className="movies-container">
-          <MovieCard movieList={movieList} loading={loading} error={error} />
+          {data && (
+            <MovieCard movieList={data} loading={loading} error={error} />
+          )}
         </div>
     </div>
   )
