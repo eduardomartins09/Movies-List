@@ -1,4 +1,5 @@
 # Movie Details
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/eduardomartins09/Movies-List/blob/main/LICENSE) 
 
 ## Sobre: 
 Link de produção: https://movies-list-netlify.netlify.app/
